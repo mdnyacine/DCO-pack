@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="ad.size" content="width=300,height=250">
+  <title>CITROEN-DCO-300x250</title>
+  <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+  <script src="data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/easing/EasePack.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/plugins/CSSPlugin.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+  <script>
+      var extImport;
+      var lang = 'FR'.toUpperCase();
+
+      
+      window.onload = function () {
+        if (Enabler.isInitialized()) {
+          enablerInitHandler();
+        } else {
+          Enabler.addEventListener(studio.events.StudioEvent.INIT, enablerInitHandler);
+        }
+      };
+  
+      function enablerInitHandler() {
+        addListeners();
+        if (Enabler.isPageLoaded()) {
+          pageLoadedHandler();
+        } else {
+          Enabler.addEventListener(studio.events.StudioEvent.PAGE_LOADED, pageLoadedHandler);
+        }
+      };
+  
+      function addListeners() {
+        document.getElementById('clickThroughBtn').addEventListener('click', bgExitHandler, false);
+      }
+  
+      function pageLoadedHandler() {
+        if (Enabler.isVisible()) {
+          adVisibilityHandler();
+        } else {
+          Enabler.addEventListener(studio.events.StudioEvent.VISIBLE, adVisibilityHandler);
+        }
+      }
+
+      function setupGlobalColor(prefix) {
+        var colorGlobal = prefix.COLOR;
+
+        switch (colorGlobal) {
+          case 'grey':
+            color = '#9F9B9E';
+            break;
+          case 'brown':
+            color = '#AA876B';
+            break;
+          case 'orange':
+            color = '#EB6428';
+            break;
+          case 'blue':
+            color = '#78C3D7';
+            break;
+          case 'pink':
+            color = '#DC5F73';
+            break;
+          case 'red':
+            color = '#B6352C';
+            break;
+          default:
+            color = '#000000';
+        }
+      }
+
+      function setupScreen1(prefix, config) {
+        if (prefix.SCREEN1_TYPE == config.screen1Type.image) {
+            document.getElementById('background_img').style.backgroundImage = "url(" + prefix['CAMPAIGN_IMAGE_SQUARE_URL_' + lang] + ")";
+
+        } else {
+
+          document.getElementById('screen1-text').innerHTML += '<span class="big color">' + prefix['SCREEN1_LINE_1_' + lang]+ '</span>';
+          document.getElementById('screen1-text').innerHTML += (prefix['SCREEN1_LINE_3_' + lang].trim() == "" ? '<span class="medium">' : '<span class="medium color">') + prefix['SCREEN1_LINE_2_' + lang] + '</span>';
+          document.getElementById('screen1-text').innerHTML += '<span class="small">' + prefix['SCREEN1_LINE_3_' + lang] + '</span>';
+        }
+      }
+
+
+      function setupScreen2(prefix, config) {
+        document.getElementById('screen2').innerHTML += '<span class="medium color ">' + prefix['SCREEN2_TITLE_LINE_1_' + lang] + '</span>';
+        document.getElementById('screen2').innerHTML += '<span class="medium color ">' + prefix['SCREEN2_TITLE_LINE_2_' + lang] + '</span>';
+
+        document.getElementById('car').src = prefix.SCREEN2_IMAGE_CAR.Url;
+      }
+
+      function setupScreen3(prefix, config) {
+        if (prefix.SCREEN3_ANIMATION == 'active') {
+            if (prefix.SCREEN3_TYPE == config.screen3Type.list) {
+              document.getElementById('bloc-list').innerHTML += (prefix['SCREEN3_LI_1_' + lang].trim() == "" ? '' :  '<li>' + prefix['SCREEN3_LI_1_' + lang] + '</li>');
+              document.getElementById('bloc-list').innerHTML += (prefix['SCREEN3_LI_2_' + lang].trim() == "" ? '' :  '<li>' + prefix['SCREEN3_LI_2_' + lang] + '</li>');
+              document.getElementById('bloc-list').innerHTML += (prefix['SCREEN3_LI_3_' + lang].trim() == "" ? '' :  '<li>' + prefix['SCREEN3_LI_3_' + lang] + '</li>');
+            } else {
+              document.getElementById('bloc-list').innerHTML = '<span class="medium color txt">' + prefix['SCREEN3_TEXT_OFFRE_' + lang] + '</span>';
+            }
+        }
+        document.getElementById('img_promo').style.backgroundImage = "url(" + prefix['SCREEN3_IMAGE_' + lang] + ")";
+      }
+
+      function setupScreen4(prefix, config) {
+        if (prefix.SCREEN4_TYPE == config.screen4Type.percent) {
+            document.getElementById('screen-end_text').innerHTML += '<span class="medium color">' + prefix['SCREEN4_LINE_1_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="small">' + prefix['SCREEN4_LINE_2_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="small">' + prefix['SCREEN4_LINE_3_' + lang] + '</span>';
+            
+          } else if (prefix.SCREEN4_TYPE == config.screen4Type.price) {
+            document.getElementById('screen-end_text').innerHTML += '<span class="small">' + prefix['SCREEN4_LINE_1_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="medium color">' + prefix['SCREEN4_LINE_2_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="small">' + prefix['SCREEN4_LINE_3_' + lang] + '</span>';
+          } else {
+            document.getElementById('screen-end_text').innerHTML += '<span class="strong color">' + prefix['SCREEN4_LINE_1_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="strong color">' + prefix['SCREEN4_LINE_2_' + lang] + '</span>';
+            document.getElementById('screen-end_text').innerHTML += '<span class="strong color">' + prefix['SCREEN4_LINE_3_' + lang] + '</span>';
+          }
+      }
+
+      function alertMaxCharacter() {
+        const list = document.getElementsByTagName('li');
+
+        for (let i = 0; i < list.length; i++) {
+          if (i != (list.length - 1) && list[i].innerHTML.length > 34) {
+            list[i].innerHTML = '<span class="alert">Max 34 Characters/line</span>';
+          } 
+          else {
+            if (list[i].innerHTML.length > 60) {
+              list[i].innerHTML = '<span class="alert">Max 60 Characters/line</span>';
+            }
+          }
+        }
+      }
+
+      function adVisibilityHandler() {
+          extImport = document.createElement('script');
+          extImport.setAttribute('type', 'text/javascript');
+          extImport.setAttribute('src', Enabler.getUrl('script.js'));
+          document.getElementsByTagName('head').item(0).appendChild(extImport);
+          document.getElementById("container").style.opacity = 1;
+
+
+          var prefix = dynamicContent.citroen_DCO_New_guideline_DATACitroen[0];
+
+          var config = {
+            screen1Type: {
+              image: 'Image',
+              text: 'Text'
+            },
+            screen3Type: {
+              list: 'List',
+              text: 'Text'
+            },
+            screen4Type: {
+              price: 'Price',
+              percent: 'Percent',
+              text: 'Text'
+            }
+          };
+
+          document.getElementById('logo').src = prefix.LOGO.Url;
+          document.getElementById('mention').innerHTML = prefix['TITLE_MENTION_' + lang] ;
+          document.getElementById('legalnotions').innerHTML = prefix['CONTENT_MENTION_' + lang] ;
+
+
+          setupGlobalColor(prefix);
+          setupScreen1(prefix, config);
+          setupScreen2(prefix, config);
+          setupScreen3(prefix, config);
+          setupScreen4(prefix, config);
+
+
+          document.getElementById('cta').innerHTML = prefix['SCREEN4_CTA_' + lang];
+          // COLOR ELEMENT CTA AND LI 
+          document.getElementById('cta').style.backgroundColor = color;
+          
+          const svgcolor = document.getElementsByClassName('colorsvg');
+
+          for (let j = 0; j < svgcolor.length; j++) {
+            svgcolor[j].style.fill = color;
+          }
+          
+          const className = document.getElementsByClassName('color');
+
+          for (let i = 0; i < className.length; i++) {
+            className[i].style.color = color;
+          }
+
+        //CONSO animation
+
+        const conso = document.getElementsByClassName('conso')[0];
+        const consoHeight = conso.offsetHeight;
+        const mention = document.getElementById('legalnotions');
+        const mentionheight = mention.offsetHeight;
+        const legalCalcul = (consoHeight + mentionheight + 5);
+        conso.style.height = consoHeight + 'px';
+
+        document.getElementById('clickThroughBtn_dynamic').addEventListener('click', ctaHandler);
+        document.getElementById('conso').addEventListener('mouseenter', legalEnter);
+        document.getElementById('conso').addEventListener('mouseleave', legalLeave);
+
+        function ctaHandler() {
+          Enabler.exitOverride("yourExitID", prefix['URL_' + lang]['Url'])
+          
+        }
+        function legalEnter() {
+          TweenMax.to(".conso", 0.2, {height: legalCalcul});
+        }
+        function legalLeave() {
+          TweenMax.to(".conso", 0.2, {height: consoHeight});
+        }
+      }
+  
+  
+      function bgExitHandler(e) {
+        Enabler.exit('Background Exit');
+      }
+    </script>
+  </head>
+  
+  <body>
+      <div id="container" class="toggle_display">
+        <div class="banner">
+          <img id="logo" class="abs" src="" alt="CITROEN logo">
+          <svg version="1.1" id="citroen_logo" class="abs"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 309 276.3"
+            style="enable-background:new 0 0 309 276.3;" xml:space="preserve">
+            <path style="fill:#FCFCFC;" d="M308.7,142.4v-0.2c0-13.2-10-24.6-10.4-25.1C293.9,112.4,191.5,0,154.4,0S15,112.4,10.6,117.1
+            c-0.4,0.5-10.4,11.8-10.4,25.1v0.2H0v106.8c0,10.3,0.7,20.7,0.7,20.8c0,0.5,0.3,4.9,2.7,6.1c0.4,0.2,0.8,0.3,1.3,0.3
+            c1.1-0.1,2.2-0.5,3-1.2c1.1-1,105.6-92.6,146.7-92.6s145.7,91.7,146.7,92.6c0.9,0.7,2,1.2,3.1,1.3c0.4,0,0.9-0.1,1.3-0.3
+            c2.5-1.2,2.7-5.6,2.7-6.1c0-0.1,0.7-10.5,0.7-20.8V142.4H308.7z M308,162.9L308,162.9z M308.1,160.7L308.1,160.7z M308.1,161.6
+            L308.1,161.6z M308.1,161.9L308.1,161.9z M0.9,163L0.9,163z"/>
+            <path class='colorsvg' style="fill:#B6352C;" d="M298.6,224.1c-4.4-4.8-106.9-117.3-144-117.3S15,219.3,10.6,224.1l0,0c-0.4,0.5-10.4,11.9-10.4,25.1
+              c0,10.3,0.7,20.7,0.7,20.8c0,0.5,0.3,4.9,2.7,6.1c0.4,0.2,0.8,0.3,1.3,0.3c1.1-0.1,2.2-0.5,3-1.2c1.1-1,105.6-92.6,146.7-92.6
+              s145.7,91.7,146.7,92.6c0.9,0.7,1.9,1.2,3.1,1.3c0.4,0,0.9-0.1,1.3-0.3c2.5-1.2,2.7-5.6,2.7-6.1c0-0.1,0.7-10.5,0.7-20.8
+              C309,235.9,299,224.5,298.6,224.1z M299.7,261.8c-27-23-107-88.3-145.1-88.3S36.5,238.8,9.5,261.7c-0.2-5.4-0.3-8.7-0.3-13.6
+              c0,0-0.7-8,6.4-16c58.5-52.7,119.8-78.4,121.7-79.2c18.3-7.7,17.3-6.2,17.2-37.1c0.4,0,0.9,0,1.3,0c25.7,2.3,95,69.1,136,114.3
+              c0.1,0.1,8.1,9.3,8.1,19C300,253.7,299.9,258.1,299.7,261.8L299.7,261.8z"/>
+            <path class='colorsvg' style="fill:#B6352C;" d="M298.4,117.1C294.1,112.4,191.7,0,154.6,0S15.1,112.4,10.8,117.1l0,0c-0.4,0.5-10.4,11.8-10.4,25.1
+              C0.3,152.5,1,162.9,1,163c0,0.5,0.3,4.9,2.7,6.1c0.4,0.2,0.8,0.3,1.3,0.3c1.1-0.1,2.1-0.5,3-1.2c1.1-1,105.4-92.6,146.6-92.6
+              s145.5,91.6,146.5,92.5c0.9,0.7,2,1.2,3.1,1.3c0.4,0,0.9-0.1,1.3-0.3c2.5-1.2,2.7-5.6,2.7-6.1c0-0.1,0.7-10.5,0.7-20.8
+              C308.9,129,298.9,117.6,298.4,117.1z M299.5,154.8c-26.9-22.9-106.9-88.3-144.9-88.3s-118,65.3-144.9,88.3
+              c-0.2-5.4-0.3-8.7-0.3-13.6c0,0-0.7-8,6.4-16c58.4-52.6,119.7-78.4,121.6-79.2c18.3-7.7,17.2-6.2,17.2-37c0.4,0,0.9,0,1.3,0
+              c25.7,2.3,94.9,69,135.8,114.1c0.1,0.1,8.1,9.3,8.1,19C299.8,146.8,299.7,151.3,299.5,154.8L299.5,154.8z"/>
+          </svg>
+          <div id="screen1" class="txt">
+            <div id="background_img"></div>
+            <div id='screen1-text' class="align">          
+            </div> 
+          </div>
+
+          <div id="screen2" class="txt">
+          </div>
+
+          <div id="screen-main"> 
+              <div id="screen-car" class="bloc-left">
+                <img id="car" src="" alt="CITROEN">        
+              </div>
+              <div class="bloc-right">
+                <div id="img_promo">
+                </div>
+                <div id="screen-end_text">
+                </div>
+              </div>
+          </div>
+
+          <div id="screen3">
+            <div id="bloc-list">
+            </div>
+          </div>
+
+          <div id="screen-end" class="txt h-align">
+            <div id="cta" class="medium">
+            </div>
+          </div>
+        
+          <div id="border" class="toggle_display"></div>
+          <div id="clickThroughBtn" class="toggle_display"></div>
+          <div id="clickThroughBtn_dynamic" class="toggle_display"></div>
+        </div>
+
+        <div id="conso" class="conso">
+            <span id="mention"></span>
+            <p id="legalnotions"></p>
+        </div>
+      </div>
+
+  </body>
+  
+</html>
